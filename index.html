@@ -158,6 +158,111 @@
 <footer>
   <p>Vendo Privé · Plataforma exclusiva para mayores de 18 años</p>
 </footer>
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
+const SUPABASE_URL = "https://pbnzdhtbrbfhkqtmipzu.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = sb_publishable_61lQD9NvLn8jXFU0bVHeMA_r-5cYA7n
+
+const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+// Crear ventana de registro
+document.querySelector('button[onclick*="crear tu perfil"]').onclick = function () {
+
+  const registro = document.createElement("div");
+
+  registro.style.cssText = `
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.75);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    padding:20px;
+  `;
+
+  registro.innerHTML = `
+    <div style="
+      background:white;
+      color:#222;
+      padding:25px;
+      border-radius:15px;
+      width:100%;
+      max-width:400px;
+    ">
+      <h2>Crear perfil</h2>
+
+      <input id="registroEmail"
+        type="email"
+        placeholder="Tu correo electrónico"
+        style="width:100%;padding:12px;margin:8px 0;">
+
+      <input id="registroPassword"
+        type="password"
+        placeholder="Contraseña"
+        style="width:100%;padding:12px;margin:8px 0;">
+
+      <label style="display:block;margin:12px 0;">
+        <input id="mayorEdad" type="checkbox">
+        Confirmo que tengo 18 años o más
+      </label>
+
+      <button id="crearCuenta"
+        style="width:100%;padding:12px;">
+        Crear cuenta
+      </button>
+
+      <p id="mensajeRegistro"></p>
+
+      <button id="cerrarRegistro"
+        style="width:100%;padding:10px;margin-top:8px;">
+        Cancelar
+      </button>
+    </div>
+  `;
+
+  document.body.appendChild(registro);
+
+  document.getElementById("cerrarRegistro").onclick = () => {
+    registro.remove();
+  };
+
+  document.getElementById("crearCuenta").onclick = async () => {
+
+    const email = document.getElementById("registroEmail").value;
+    const password = document.getElementById("registroPassword").value;
+    const mayorEdad = document.getElementById("mayorEdad").checked;
+    const mensaje = document.getElementById("mensajeRegistro");
+
+    if (!mayorEdad) {
+      mensaje.textContent = "Debes confirmar que tienes 18 años o más.";
+      return;
+    }
+
+    if (!email || !password) {
+      mensaje.textContent = "Completa el correo y la contraseña.";
+      return;
+    }
+
+    const { data, error } = await supabaseClient.auth.signUp({
+      email: email,
+      password: password
+    });
+
+    if (error) {
+      mensaje.textContent = error.message;
+      return;
+    }
+
+    mensaje.textContent =
+      "Cuenta creada. Revisa tu correo para confirmar tu cuenta.";
+  };
+};
+</script>
 </body>
 </html>
