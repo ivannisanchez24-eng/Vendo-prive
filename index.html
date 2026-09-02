@@ -37,6 +37,13 @@ header{
   font-weight:bold;
 }
 
+.header-buttons{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
 button{
   border:0;
   border-radius:10px;
@@ -48,6 +55,11 @@ button{
 .btn-principal{
   background:#d9a7ff;
   color:#111;
+}
+
+.btn-secundario{
+  background:#333;
+  color:white;
 }
 
 .hero{
@@ -160,15 +172,6 @@ footer{
   resize:vertical;
 }
 
-.edad{
-  display:flex;
-  gap:10px;
-}
-
-.edad input{
-  width:50%;
-}
-
 .acciones{
   display:flex;
   gap:10px;
@@ -186,10 +189,39 @@ footer{
 
 .cerrar{
   background:#ddd;
+  color:#222;
 }
 
 .oculto{
   display:none;
+}
+
+.info-telefono{
+  color:#666;
+  font-size:13px;
+  margin-top:3px;
+  margin-bottom:8px;
+}
+
+@media(max-width:600px){
+
+  header{
+    align-items:flex-start;
+  }
+
+  .logo{
+    font-size:19px;
+  }
+
+  .header-buttons{
+    gap:5px;
+  }
+
+  .header-buttons button{
+    padding:9px 10px;
+    font-size:12px;
+  }
+
 }
 </style>
 </head>
@@ -197,17 +229,44 @@ footer{
 <body>
 
 <header>
+
   <div class="logo">🌙 Vendo Privé</div>
 
-  <button class="btn-principal" id="crearPerfilBtn">
-    Crear perfil
-  </button>
+  <div class="header-buttons">
+
+    <button
+      class="btn-secundario"
+      id="iniciarSesionBtn">
+      Iniciar sesión
+    </button>
+
+    <button
+      class="btn-principal"
+      id="crearPerfilBtn">
+      Crear cuenta
+    </button>
+
+    <button
+      class="btn-secundario oculto"
+      id="cerrarSesionBtn">
+      Cerrar sesión
+    </button>
+
+  </div>
+
 </header>
 
+
 <section class="hero">
+
   <h1>Vendo Privé</h1>
-  <p>Conecta con personas adultas en un espacio privado.</p>
+
+  <p>
+    Conecta con personas adultas en un espacio privado.
+  </p>
+
 </section>
+
 
 <input
   class="buscar"
@@ -216,56 +275,89 @@ footer{
   placeholder="Buscar por ciudad..."
 >
 
+
 <section class="perfiles" id="listaPerfiles">
 
   <div class="card">
+
     <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80">
+
     <div class="card-info">
+
       <h3>Sofía, 25</h3>
+
       <p>Santo Domingo</p>
-      <button class="btn-principal">Ver perfil</button>
+
+      <button class="btn-principal">
+        Ver perfil
+      </button>
+
     </div>
+
   </div>
 
+
   <div class="card">
+
     <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80">
+
     <div class="card-info">
+
       <h3>Valentina, 27</h3>
+
       <p>Santiago</p>
-      <button class="btn-principal">Ver perfil</button>
+
+      <button class="btn-principal">
+        Ver perfil
+      </button>
+
     </div>
+
   </div>
 
 </section>
+
 
 <footer>
   Vendo Privé · Plataforma exclusiva para mayores de 18 años
 </footer>
 
 
-<!-- MODAL REGISTRO -->
+
+<!-- ========================= -->
+<!-- MODAL CREAR CUENTA -->
+<!-- ========================= -->
 
 <div class="modal" id="registroModal">
 
   <div class="modal-box">
 
-    <h2>Crear tu perfil</h2>
+    <h2>Crear tu cuenta</h2>
 
     <p style="margin-bottom:15px;color:#666;">
       Crea tu cuenta para entrar a Vendo Privé.
     </p>
 
-    <input
-      id="email"
-      type="email"
-      placeholder="Correo electrónico"
-    >
 
     <input
-      id="password"
+      id="registroTelefono"
+      type="tel"
+      placeholder="Número de celular"
+      autocomplete="tel"
+    >
+
+    <p class="info-telefono">
+      Escribe tu número con código de país. Ejemplo: +1 809 555 1234
+    </p>
+
+
+    <input
+      id="registroPassword"
       type="password"
       placeholder="Contraseña: mínimo 8 caracteres, letras y números"
+      autocomplete="new-password"
     >
+
 
     <input
       id="nombre"
@@ -273,11 +365,23 @@ footer{
       placeholder="Nombre o nombre de usuario"
     >
 
+
     <select id="genero">
-      <option value="">Selecciona tu género</option>
-      <option value="Mujer">Mujer</option>
-      <option value="Hombre">Hombre</option>
+
+      <option value="">
+        Selecciona tu género
+      </option>
+
+      <option value="Mujer">
+        Mujer
+      </option>
+
+      <option value="Hombre">
+        Hombre
+      </option>
+
     </select>
+
 
     <input
       id="edad"
@@ -287,156 +391,373 @@ footer{
       placeholder="Edad"
     >
 
+
     <input
       id="ciudad"
       type="text"
       placeholder="Ciudad"
     >
 
+
     <textarea
       id="descripcion"
       placeholder="Escribe una descripción de tu perfil..."
     ></textarea>
 
+
     <label style="display:block;margin:12px 0;">
+
       <input
         id="mayorEdad"
         type="checkbox"
         style="width:auto;"
       >
+
       Confirmo que tengo 18 años o más
+
     </label>
 
+
     <div class="acciones">
-      <button class="btn-principal" id="registrarBtn">
+
+      <button
+        class="btn-principal"
+        id="registrarBtn">
         Crear cuenta
       </button>
 
-      <button class="cerrar" id="cerrarBtn">
+      <button
+        class="cerrar"
+        id="cerrarRegistroBtn">
         Cancelar
       </button>
+
     </div>
 
-    <p class="mensaje" id="mensaje"></p>
+
+    <p
+      class="mensaje"
+      id="mensajeRegistro">
+    </p>
 
   </div>
+
 </div>
+
+
+
+<!-- ========================= -->
+<!-- MODAL INICIAR SESIÓN -->
+<!-- ========================= -->
+
+<div class="modal" id="loginModal">
+
+  <div class="modal-box">
+
+    <h2>Iniciar sesión</h2>
+
+    <p style="margin-bottom:15px;color:#666;">
+      Entra a tu cuenta con tu número de celular y contraseña.
+    </p>
+
+
+    <input
+      id="loginTelefono"
+      type="tel"
+      placeholder="Número de celular"
+      autocomplete="tel"
+    >
+
+
+    <input
+      id="loginPassword"
+      type="password"
+      placeholder="Contraseña"
+      autocomplete="current-password"
+    >
+
+
+    <div class="acciones">
+
+      <button
+        class="btn-principal"
+        id="loginBtn">
+        Entrar
+      </button>
+
+      <button
+        class="cerrar"
+        id="cerrarLoginBtn">
+        Cancelar
+      </button>
+
+    </div>
+
+
+    <p
+      class="mensaje"
+      id="mensajeLogin">
+    </p>
+
+  </div>
+
+</div>
+
 
 
 <script>
 
+
+/* =====================================
+   SUPABASE
+===================================== */
+
 const SUPABASE_URL =
 "https://pbnzdhtbrbfhkqtmipzu.supabase.co";
 
+
 /*
-  IMPORTANTE:
-  Pon aquí tu Publishable key de Supabase.
-  No uses una service_role key.
+  DEJA AQUÍ TU MISMA PUBLISHABLE KEY
+  QUE YA TENÍAS.
 */
 
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_61lQD9NvLn8jXFU0bVHeMA_r-5cYA7n";
 
 
-const supabaseClient = window.supabase.createClient(
+const supabaseClient =
+window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY
 );
 
 
-// ABRIR REGISTRO
 
-document.getElementById("crearPerfilBtn").addEventListener(
+/* =====================================
+   CONVERTIR CELULAR EN IDENTIFICADOR
+   INTERNO PARA SUPABASE
+===================================== */
+
+function normalizarTelefono(telefono){
+
+  return telefono
+    .trim()
+    .replace(/[^\d+]/g,"");
+
+}
+
+
+function crearIdentificadorInterno(telefono){
+
+  const numero =
+    normalizarTelefono(telefono);
+
+  return numero.replace(/\+/g,"") +
+    "@auth.vendoprive.com";
+
+}
+
+
+
+/* =====================================
+   ELEMENTOS
+===================================== */
+
+const registroModal =
+document.getElementById("registroModal");
+
+const loginModal =
+document.getElementById("loginModal");
+
+const mensajeRegistro =
+document.getElementById("mensajeRegistro");
+
+const mensajeLogin =
+document.getElementById("mensajeLogin");
+
+
+
+/* =====================================
+   ABRIR CREAR CUENTA
+===================================== */
+
+document
+.getElementById("crearPerfilBtn")
+.addEventListener(
   "click",
   function(){
 
-    document.getElementById("registroModal").style.display="flex";
+    mensajeRegistro.textContent="";
+
+    registroModal.style.display="flex";
 
   }
 );
 
 
-// CERRAR REGISTRO
 
-document.getElementById("cerrarBtn").addEventListener(
+/* =====================================
+   ABRIR LOGIN
+===================================== */
+
+document
+.getElementById("iniciarSesionBtn")
+.addEventListener(
   "click",
   function(){
 
-    document.getElementById("registroModal").style.display="none";
+    mensajeLogin.textContent="";
+
+    loginModal.style.display="flex";
 
   }
 );
 
 
-// REGISTRAR USUARIO
 
-document.getElementById("registrarBtn").addEventListener(
+/* =====================================
+   CERRAR REGISTRO
+===================================== */
+
+document
+.getElementById("cerrarRegistroBtn")
+.addEventListener(
+  "click",
+  function(){
+
+    registroModal.style.display="none";
+
+  }
+);
+
+
+
+/* =====================================
+   CERRAR LOGIN
+===================================== */
+
+document
+.getElementById("cerrarLoginBtn")
+.addEventListener(
+  "click",
+  function(){
+
+    loginModal.style.display="none";
+
+  }
+);
+
+
+
+/* =====================================
+   CREAR CUENTA
+===================================== */
+
+document
+.getElementById("registrarBtn")
+.addEventListener(
   "click",
   async function(){
 
-    const email =
-      document.getElementById("email").value.trim();
+    mensajeRegistro.textContent="";
+
+    const telefono =
+      normalizarTelefono(
+        document
+        .getElementById("registroTelefono")
+        .value
+      );
+
 
     const password =
-      document.getElementById("password").value;
+      document
+      .getElementById("registroPassword")
+      .value;
+
 
     const nombre =
-      document.getElementById("nombre").value.trim();
+      document
+      .getElementById("nombre")
+      .value
+      .trim();
+
 
     const genero =
-      document.getElementById("genero").value;
+      document
+      .getElementById("genero")
+      .value;
+
 
     const edad =
-      Number(document.getElementById("edad").value);
+      Number(
+        document
+        .getElementById("edad")
+        .value
+      );
+
 
     const ciudad =
-      document.getElementById("ciudad").value.trim();
+      document
+      .getElementById("ciudad")
+      .value
+      .trim();
+
 
     const descripcion =
-      document.getElementById("descripcion").value.trim();
+      document
+      .getElementById("descripcion")
+      .value
+      .trim();
+
 
     const mayorEdad =
-      document.getElementById("mayorEdad").checked;
-
-    const mensaje =
-      document.getElementById("mensaje");
-
-
-    mensaje.textContent="";
+      document
+      .getElementById("mayorEdad")
+      .checked;
 
 
-    // EDAD
+
+    /* MAYOR DE EDAD */
 
     if(!mayorEdad){
 
-      mensaje.textContent =
-      "Debes confirmar que tienes 18 años o más.";
+      mensajeRegistro.textContent =
+        "Debes confirmar que tienes 18 años o más.";
 
       return;
+
     }
 
 
     if(!edad || edad < 18){
 
-      mensaje.textContent =
-      "Debes tener 18 años o más.";
+      mensajeRegistro.textContent =
+        "Debes tener 18 años o más.";
 
       return;
+
     }
 
 
-    // CORREO
 
-    if(!email){
+    /* TELÉFONO */
 
-      mensaje.textContent =
-      "Escribe tu correo electrónico.";
+    if(
+      !telefono ||
+      !telefono.startsWith("+") ||
+      telefono.length < 10
+    ){
+
+      mensajeRegistro.textContent =
+        "Escribe un número de celular válido con código de país. Ejemplo: +18095551234";
 
       return;
+
     }
 
 
-    // CONTRASEÑA
+
+    /* CONTRASEÑA */
 
     if(
       password.length < 8 ||
@@ -444,89 +765,358 @@ document.getElementById("registrarBtn").addEventListener(
       !/[0-9]/.test(password)
     ){
 
-      mensaje.textContent =
-      "La contraseña debe tener mínimo 8 caracteres e incluir letras y números.";
+      mensajeRegistro.textContent =
+        "La contraseña debe tener mínimo 8 caracteres e incluir letras y números.";
 
       return;
+
     }
 
 
-    // DATOS DEL PERFIL
 
-    if(!nombre || !genero || !ciudad){
+    /* PERFIL */
 
-      mensaje.textContent =
-      "Completa nombre, género y ciudad.";
+    if(
+      !nombre ||
+      !genero ||
+      !ciudad
+    ){
+
+      mensajeRegistro.textContent =
+        "Completa nombre, género y ciudad.";
 
       return;
+
     }
 
+
+
+    /* IDENTIFICADOR INTERNO */
+
+    const emailInterno =
+      crearIdentificadorInterno(telefono);
+
+
+
+    mensajeRegistro.textContent =
+      "Creando cuenta...";
+
+
+
+    /* REGISTRO EN SUPABASE */
 
     const { data, error } =
       await supabaseClient.auth.signUp({
 
-        email:email,
+        email: emailInterno,
 
-        password:password,
+        password: password,
 
         options:{
-          emailRedirectTo:"https://isanchez24-eng.github.io/Vendo-prive/",
-          
+
           data:{
-            nombre:nombre,
-            genero:genero,
-            edad:edad,
-            ciudad:ciudad,
-            descripcion:descripcion,
-            mayor_de_edad:true
+
+            telefono: telefono,
+
+            nombre: nombre,
+
+            genero: genero,
+
+            edad: edad,
+
+            ciudad: ciudad,
+
+            descripcion: descripcion,
+
+            mayor_de_edad: true
+
           }
+
         }
 
       });
 
 
+
     if(error){
 
-      mensaje.textContent =
-      error.message;
+      mensajeRegistro.textContent =
+        error.message;
 
       return;
+
     }
 
 
-    mensaje.textContent =
-    "¡Cuenta creada! Revisa tu correo electrónico para confirmar tu cuenta.";
+
+    mensajeRegistro.textContent =
+      "¡Cuenta creada correctamente! Ya puedes iniciar sesión con tu número y contraseña.";
+
+
+
+    /* LIMPIAR */
+
+    document
+    .getElementById("registroTelefono")
+    .value="";
+
+    document
+    .getElementById("registroPassword")
+    .value="";
+
+    document
+    .getElementById("nombre")
+    .value="";
+
+    document
+    .getElementById("genero")
+    .value="";
+
+    document
+    .getElementById("edad")
+    .value="";
+
+    document
+    .getElementById("ciudad")
+    .value="";
+
+    document
+    .getElementById("descripcion")
+    .value="";
+
+    document
+    .getElementById("mayorEdad")
+    .checked=false;
 
   }
 );
 
 
-// BUSCAR CIUDAD
 
-document.getElementById("buscarCiudad").addEventListener(
+/* =====================================
+   INICIAR SESIÓN
+===================================== */
+
+document
+.getElementById("loginBtn")
+.addEventListener(
+  "click",
+  async function(){
+
+    mensajeLogin.textContent="";
+
+    const telefono =
+      normalizarTelefono(
+        document
+        .getElementById("loginTelefono")
+        .value
+      );
+
+
+    const password =
+      document
+      .getElementById("loginPassword")
+      .value;
+
+
+
+    /* TELÉFONO */
+
+    if(
+      !telefono ||
+      !telefono.startsWith("+") ||
+      telefono.length < 10
+    ){
+
+      mensajeLogin.textContent =
+        "Escribe tu número con código de país. Ejemplo: +18095551234";
+
+      return;
+
+    }
+
+
+
+    if(!password){
+
+      mensajeLogin.textContent =
+        "Escribe tu contraseña.";
+
+      return;
+
+    }
+
+
+
+    const emailInterno =
+      crearIdentificadorInterno(telefono);
+
+
+
+    mensajeLogin.textContent =
+      "Iniciando sesión...";
+
+
+
+    const { data, error } =
+      await supabaseClient.auth.signInWithPassword({
+
+        email: emailInterno,
+
+        password: password
+
+      });
+
+
+
+    if(error){
+
+      mensajeLogin.textContent =
+        "Número de celular o contraseña incorrectos.";
+
+      return;
+
+    }
+
+
+
+    mensajeLogin.textContent =
+      "¡Sesión iniciada correctamente!";
+
+
+
+    loginModal.style.display="none";
+
+
+
+    actualizarBotones();
+
+  }
+);
+
+
+
+/* =====================================
+   ESTADO DE SESIÓN
+===================================== */
+
+async function actualizarBotones(){
+
+  const { data } =
+    await supabaseClient.auth.getSession();
+
+
+  const conectado =
+    !!data.session;
+
+
+  document
+  .getElementById("iniciarSesionBtn")
+  .classList.toggle(
+    "oculto",
+    conectado
+  );
+
+
+  document
+  .getElementById("crearPerfilBtn")
+  .classList.toggle(
+    "oculto",
+    conectado
+  );
+
+
+  document
+  .getElementById("cerrarSesionBtn")
+  .classList.toggle(
+    "oculto",
+    !conectado
+  );
+
+}
+
+
+
+/* =====================================
+   CERRAR SESIÓN
+===================================== */
+
+document
+.getElementById("cerrarSesionBtn")
+.addEventListener(
+  "click",
+  async function(){
+
+    await supabaseClient.auth.signOut();
+
+    actualizarBotones();
+
+  }
+);
+
+
+
+/* =====================================
+   DETECTAR CAMBIOS DE SESIÓN
+===================================== */
+
+supabaseClient.auth.onAuthStateChange(
+  function(){
+
+    actualizarBotones();
+
+  }
+);
+
+
+
+/* =====================================
+   BUSCAR CIUDAD
+===================================== */
+
+document
+.getElementById("buscarCiudad")
+.addEventListener(
   "input",
   function(){
 
     const texto =
-      this.value.toLowerCase().trim();
+      this.value
+      .toLowerCase()
+      .trim();
+
 
     const perfiles =
       document.querySelectorAll(".card");
 
-    perfiles.forEach(function(perfil){
 
-      const contenido =
-        perfil.textContent.toLowerCase();
+    perfiles.forEach(
+      function(perfil){
 
-      perfil.style.display =
-        contenido.includes(texto)
-        ? ""
-        : "none";
+        const contenido =
+          perfil.textContent
+          .toLowerCase();
 
-    });
+
+        perfil.style.display =
+          contenido.includes(texto)
+          ? ""
+          : "none";
+
+      }
+    );
 
   }
 );
+
+
+
+/* =====================================
+   COMPROBAR SESIÓN AL CARGAR
+===================================== */
+
+actualizarBotones();
+
 
 </script>
 
