@@ -203,6 +203,15 @@ footer{
   margin-bottom:8px;
 }
 
+.enlace{
+  display:block;
+  margin-top:14px;
+  color:#6d35c7;
+  font-weight:bold;
+  cursor:pointer;
+  text-decoration:none;
+}
+
 @media(max-width:600px){
 
   header{
@@ -337,7 +346,6 @@ footer{
       Crea tu cuenta para entrar a Vendo Privé.
     </p>
 
-
     <input
       id="registroTelefono"
       type="tel"
@@ -350,7 +358,6 @@ footer{
       Ejemplo: +1 809 555 1234
     </p>
 
-
     <input
       id="registroPassword"
       type="password"
@@ -358,13 +365,11 @@ footer{
       autocomplete="new-password"
     >
 
-
     <input
       id="nombre"
       type="text"
       placeholder="Nombre o nombre de usuario"
     >
-
 
     <select id="genero">
 
@@ -382,7 +387,6 @@ footer{
 
     </select>
 
-
     <input
       id="edad"
       type="number"
@@ -391,19 +395,16 @@ footer{
       placeholder="Edad"
     >
 
-
     <input
       id="ciudad"
       type="text"
       placeholder="Ciudad"
     >
 
-
     <textarea
       id="descripcion"
       placeholder="Escribe una descripción de tu perfil..."
     ></textarea>
-
 
     <label style="display:block;margin:12px 0;">
 
@@ -416,7 +417,6 @@ footer{
       Confirmo que tengo 18 años o más
 
     </label>
-
 
     <div class="acciones">
 
@@ -433,7 +433,6 @@ footer{
       </button>
 
     </div>
-
 
     <p
       class="mensaje"
@@ -459,14 +458,12 @@ footer{
       Entra a tu cuenta con tu número de celular y contraseña.
     </p>
 
-
     <input
       id="loginTelefono"
       type="tel"
       placeholder="Número de celular"
       autocomplete="tel"
     >
-
 
     <input
       id="loginPassword"
@@ -475,6 +472,12 @@ footer{
       autocomplete="current-password"
     >
 
+    <button
+      type="button"
+      id="recuperarPasswordBtn"
+      class="enlace">
+      ¿Olvidaste tu contraseña?
+    </button>
 
     <div class="acciones">
 
@@ -492,10 +495,119 @@ footer{
 
     </div>
 
-
     <p
       class="mensaje"
       id="mensajeLogin">
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- MODAL RECUPERAR CONTRASEÑA -->
+<!-- ========================= -->
+
+<div class="modal" id="recuperarModal">
+
+  <div class="modal-box">
+
+    <h2>Restablecer contraseña</h2>
+
+    <p style="margin-bottom:15px;color:#666;">
+      Te enviaremos un código de verificación por SMS.
+    </p>
+
+
+    <!-- PASO 1 -->
+
+    <div id="recuperarPaso1">
+
+      <input
+        id="recuperarTelefono"
+        type="tel"
+        placeholder="Número de celular"
+        autocomplete="tel"
+      >
+
+      <p class="info-telefono">
+        Usa el mismo número con el que creaste tu cuenta.
+      </p>
+
+      <div class="acciones">
+
+        <button
+          class="btn-principal"
+          id="enviarCodigoBtn">
+          Enviar código
+        </button>
+
+        <button
+          class="cerrar"
+          id="cerrarRecuperarBtn">
+          Cancelar
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <!-- PASO 2 -->
+
+    <div
+      id="recuperarPaso2"
+      class="oculto">
+
+      <input
+        id="codigoRecuperacion"
+        type="text"
+        inputmode="numeric"
+        maxlength="6"
+        placeholder="Código de 6 dígitos"
+      >
+
+      <input
+        id="nuevaPassword"
+        type="password"
+        placeholder="Nueva contraseña"
+        autocomplete="new-password"
+      >
+
+      <input
+        id="confirmarPassword"
+        type="password"
+        placeholder="Confirmar nueva contraseña"
+        autocomplete="new-password"
+      >
+
+      <p class="info-telefono">
+        Mínimo 8 caracteres e incluye letras y números.
+      </p>
+
+      <div class="acciones">
+
+        <button
+          class="btn-principal"
+          id="verificarCodigoBtn">
+          Verificar y cambiar
+        </button>
+
+        <button
+          class="cerrar"
+          id="cancelarRecuperacionBtn">
+          Cancelar
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <p
+      class="mensaje"
+      id="mensajeRecuperacion">
     </p>
 
   </div>
@@ -545,11 +657,17 @@ document.getElementById("registroModal");
 const loginModal =
 document.getElementById("loginModal");
 
+const recuperarModal =
+document.getElementById("recuperarModal");
+
 const mensajeRegistro =
 document.getElementById("mensajeRegistro");
 
 const mensajeLogin =
 document.getElementById("mensajeLogin");
+
+const mensajeRecuperacion =
+document.getElementById("mensajeRecuperacion");
 
 
 /* =====================================
@@ -615,6 +733,54 @@ document
   function(){
 
     loginModal.style.display="none";
+
+  }
+);
+
+
+/* =====================================
+   ABRIR RECUPERACIÓN
+===================================== */
+
+document
+.getElementById("recuperarPasswordBtn")
+.addEventListener(
+  "click",
+  function(){
+
+    loginModal.style.display="none";
+
+    recuperarModal.style.display="flex";
+
+    mensajeRecuperacion.textContent="";
+
+  }
+);
+
+
+/* =====================================
+   CERRAR RECUPERACIÓN
+===================================== */
+
+document
+.getElementById("cerrarRecuperarBtn")
+.addEventListener(
+  "click",
+  function(){
+
+    recuperarModal.style.display="none";
+
+  }
+);
+
+
+document
+.getElementById("cancelarRecuperacionBtn")
+.addEventListener(
+  "click",
+  function(){
+
+    recuperarModal.style.display="none";
 
   }
 );
@@ -688,8 +854,6 @@ document
       .checked;
 
 
-    /* MAYOR DE EDAD */
-
     if(!mayorEdad){
 
       mensajeRegistro.textContent =
@@ -710,8 +874,6 @@ document
     }
 
 
-    /* TELÉFONO */
-
     if(
       !telefono ||
       !telefono.startsWith("+") ||
@@ -719,14 +881,12 @@ document
     ){
 
       mensajeRegistro.textContent =
-        "Escribe un número válido con código de país. Ejemplo: +18095551234";
+        "Escribe un número válido con código de país.";
 
       return;
 
     }
 
-
-    /* CONTRASEÑA */
 
     if(
       password.length < 8 ||
@@ -741,8 +901,6 @@ document
 
     }
 
-
-    /* PERFIL */
 
     if(
       !nombre ||
@@ -761,10 +919,6 @@ document
     mensajeRegistro.textContent =
       "Creando cuenta...";
 
-
-    /* =====================================
-       REGISTRO REAL CON TELÉFONO
-    ===================================== */
 
     const { data, error } =
       await supabaseClient.auth.signUp({
@@ -811,8 +965,6 @@ document
     mensajeRegistro.textContent =
       "¡Cuenta creada! Revisa tu teléfono si Supabase solicita verificación.";
 
-
-    /* LIMPIAR */
 
     document
     .getElementById("registroTelefono")
@@ -877,8 +1029,6 @@ document
       .value;
 
 
-    /* TELÉFONO */
-
     if(
       !telefono ||
       !telefono.startsWith("+") ||
@@ -886,7 +1036,7 @@ document
     ){
 
       mensajeLogin.textContent =
-        "Escribe tu número con código de país. Ejemplo: +18095551234";
+        "Escribe tu número con código de país.";
 
       return;
 
@@ -906,10 +1056,6 @@ document
     mensajeLogin.textContent =
       "Iniciando sesión...";
 
-
-    /* =====================================
-       LOGIN REAL CON TELÉFONO
-    ===================================== */
 
     const { data, error } =
       await supabaseClient.auth.signInWithPassword({
@@ -939,6 +1085,279 @@ document
 
 
     actualizarBotones();
+
+  }
+);
+
+
+/* =====================================
+   ENVIAR CÓDIGO DE RECUPERACIÓN
+===================================== */
+
+document
+.getElementById("enviarCodigoBtn")
+.addEventListener(
+  "click",
+  async function(){
+
+    mensajeRecuperacion.textContent="";
+
+
+    const telefono =
+      normalizarTelefono(
+        document
+        .getElementById("recuperarTelefono")
+        .value
+      );
+
+
+    if(
+      !telefono ||
+      !telefono.startsWith("+") ||
+      telefono.length < 10
+    ){
+
+      mensajeRecuperacion.textContent =
+        "Escribe un número válido con código de país.";
+
+      return;
+
+    }
+
+
+    mensajeRecuperacion.textContent =
+      "Enviando código por SMS...";
+
+
+    /*
+      IMPORTANTE:
+      Este OTP autentica temporalmente al usuario.
+      Después de verificarlo podremos cambiar
+      su contraseña con updateUser().
+    */
+
+    const { error } =
+      await supabaseClient.auth.signInWithOtp({
+
+        phone: telefono,
+
+        options:{
+          shouldCreateUser:false
+        }
+
+      });
+
+
+    if(error){
+
+      mensajeRecuperacion.textContent =
+        error.message;
+
+      return;
+
+    }
+
+
+    mensajeRecuperacion.textContent =
+      "Código enviado. Revisa tu teléfono.";
+
+
+    document
+    .getElementById("recuperarPaso1")
+    .classList.add("oculto");
+
+
+    document
+    .getElementById("recuperarPaso2")
+    .classList.remove("oculto");
+
+  }
+);
+
+
+/* =====================================
+   VERIFICAR CÓDIGO Y CAMBIAR CONTRASEÑA
+===================================== */
+
+document
+.getElementById("verificarCodigoBtn")
+.addEventListener(
+  "click",
+  async function(){
+
+    mensajeRecuperacion.textContent="";
+
+
+    const telefono =
+      normalizarTelefono(
+        document
+        .getElementById("recuperarTelefono")
+        .value
+      );
+
+
+    const codigo =
+      document
+      .getElementById("codigoRecuperacion")
+      .value
+      .trim();
+
+
+    const nuevaPassword =
+      document
+      .getElementById("nuevaPassword")
+      .value;
+
+
+    const confirmarPassword =
+      document
+      .getElementById("confirmarPassword")
+      .value;
+
+
+    if(!/^\d{6}$/.test(codigo)){
+
+      mensajeRecuperacion.textContent =
+        "Introduce el código de 6 dígitos.";
+
+      return;
+
+    }
+
+
+    if(
+      nuevaPassword.length < 8 ||
+      !/[A-Za-z]/.test(nuevaPassword) ||
+      !/[0-9]/.test(nuevaPassword)
+    ){
+
+      mensajeRecuperacion.textContent =
+        "La nueva contraseña debe tener mínimo 8 caracteres e incluir letras y números.";
+
+      return;
+
+    }
+
+
+    if(nuevaPassword !== confirmarPassword){
+
+      mensajeRecuperacion.textContent =
+        "Las contraseñas no coinciden.";
+
+      return;
+
+    }
+
+
+    mensajeRecuperacion.textContent =
+      "Verificando código...";
+
+
+    /*
+      Verificamos el SMS.
+      Supabase crea una sesión autenticada
+      cuando el OTP es correcto.
+    */
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient.auth.verifyOtp({
+
+        phone: telefono,
+
+        token: codigo,
+
+        type: "sms"
+
+      });
+
+
+    if(error){
+
+      mensajeRecuperacion.textContent =
+        "El código es incorrecto o ya expiró.";
+
+      return;
+
+    }
+
+
+    /*
+      Ahora que el usuario está autenticado,
+      cambiamos su contraseña.
+    */
+
+    const {
+      error: passwordError
+    } =
+      await supabaseClient.auth.updateUser({
+
+        password: nuevaPassword
+
+      });
+
+
+    if(passwordError){
+
+      mensajeRecuperacion.textContent =
+        passwordError.message;
+
+      return;
+
+    }
+
+
+    mensajeRecuperacion.textContent =
+      "¡Contraseña restablecida correctamente! Ya puedes iniciar sesión.";
+
+
+    document
+    .getElementById("recuperarPaso1")
+    .classList.remove("oculto");
+
+
+    document
+    .getElementById("recuperarPaso2")
+    .classList.add("oculto");
+
+
+    document
+    .getElementById("recuperarTelefono")
+    .value="";
+
+
+    document
+    .getElementById("codigoRecuperacion")
+    .value="";
+
+
+    document
+    .getElementById("nuevaPassword")
+    .value="";
+
+
+    document
+    .getElementById("confirmarPassword")
+    .value="";
+
+
+    setTimeout(
+      async function(){
+
+        await supabaseClient.auth.signOut();
+
+        recuperarModal.style.display="none";
+
+        loginModal.style.display="flex";
+
+        mensajeLogin.textContent =
+          "Contraseña cambiada. Inicia sesión con tu nueva contraseña.";
+
+      },
+      1500
+    );
 
   }
 );
